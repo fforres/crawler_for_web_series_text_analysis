@@ -36,12 +36,19 @@
   },
   "dependencies": {
     "crawler": "^1.0.2",
-    "cross-env": "^3.1.4"
+    "cross-env": "^3.1.4",
+    "lokijs": "^1.4.2"
   },
   "babel": {
     "presets": [
       "es2015",
       "stage-0"
     ]
+  },
+  "eslintrc": {
+    "parser": "babel-eslint",
+    "rules": {
+      "strict": 0
+    }
   }
 }

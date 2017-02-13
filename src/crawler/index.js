@@ -16,15 +16,6 @@ const crawler = new Crawler({
         done();
     }
 });
-const baseUrl = 'http://transcripts.foreverdreaming.org/viewforum.php?f='
-const series = [{
-  name: 'Arrow',
-  id: 172
-}, {
-  name: 'Future-Worm',
-  id: 386
-}];
-
 
 export const getPagesToCrawl  = (url) => {
   return getAmountOfPages(url)
@@ -132,8 +123,8 @@ export const crawlAndParseText = (chapterData) => new Promise((resolve, reject) 
   }]);
 })
 
-export const start = () => {
-  const parsedUrl = url.parse(`${baseUrl}${series[0].id}`, true);
+export const start = (startingUrl) => {
+  const parsedUrl = url.parse(startingUrl, true);
   // crawlAndParseText({
   //   href:'http://transcripts.foreverdreaming.org/viewtopic.php?f=172&t=30915&sid=4d01ecf642c22c4242ae50656d4d15cf',
   //   text: '05x12 - Bratva'
@@ -144,7 +135,7 @@ export const start = () => {
   // .catch(err => console.error(err));
   //
   //
-  getPagesToCrawl(parsedUrl.href)
+  return getPagesToCrawl(parsedUrl.href)
     .then((pagesToCrawl) => {
       console.log("We'll crawl", pagesToCrawl);
       const crawlingArr = pagesToCrawl.map(el => openWebSite(el));
@@ -153,10 +144,6 @@ export const start = () => {
     .then(rawData => {
       const allChapters = rawData.reduce((el, newEl) => el.concat(newEl)).map(el => crawlAndParseText(el));
       return Promise.all(allChapters);
-    })
-    .then(everyChapterParsed => {
-      console.log(require('util').inspect(everyChapterParsed, { depth: null }));
-      console.log(require('util').inspect(everyChapterParsed.length, { depth: null }));
     })
     .catch(err => console.error(err))
 
