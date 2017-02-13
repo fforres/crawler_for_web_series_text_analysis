@@ -5,9 +5,6 @@ import parse5 from 'parse5';
 import cheerio from 'cheerio';
 import Nightmare from 'nightmare';
 
-var Crawler = require("crawler");
-var url = require('url');
-
 var c = new Crawler({
     maxConnections : 10,
     // This will be called for each crawled page
